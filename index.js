@@ -455,7 +455,7 @@ export function sha256( data ) {
 	return hashFn.digest( 'hex' );
 }
 
-export function getCredentialHash( vc, issuer, claimsVerifierContractAddress ) {
+export function getCredentialHash( vc, issuerAddress, claimsVerifierContractAddress ) {
 	const hashDiplomaHex = `0x${sha256( JSON.stringify( vc.credentialSubject ) )}`;
 
 	const encodeEIP712Domain = web3Abi.encodeParameters(
@@ -469,7 +469,7 @@ export function getCredentialHash( vc, issuer, claimsVerifierContractAddress ) {
 	const subjectAddress = vc.credentialSubject.id.split( ':' ).slice( -1 )[0];
 	const encodeHashCredential = web3Abi.encodeParameters(
 		['bytes32', 'address', 'address', 'bytes32', 'uint256', 'uint256'],
-		[VERIFIABLE_CREDENTIAL_TYPEHASH, issuer.address, subjectAddress, hashDiplomaHex, Math.round( validFrom / 1000 ), Math.round( validTo / 1000 )]
+		[VERIFIABLE_CREDENTIAL_TYPEHASH, issuerAddress, subjectAddress, hashDiplomaHex, Math.round( validFrom / 1000 ), Math.round( validTo / 1000 )]
 	);
 	const hashCredential = web3Utils.soliditySha3( encodeHashCredential );
 
@@ -477,10 +477,10 @@ export function getCredentialHash( vc, issuer, claimsVerifierContractAddress ) {
 	return web3Utils.soliditySha3( '0x1901'.toString( 16 ) + encodedCredentialHash.substring( 2, 131 ) );
 }
 
-export function signCredential( credentialHash, issuer ) {
+export function signCredential( credentialHash, issuerPrivateKey ) {
 	const rsv = ethUtil.ecsign(
 		Buffer.from( credentialHash.substring( 2, 67 ), 'hex' ),
-		Buffer.from( issuer.privateKey, 'hex' )
+		Buffer.from( issuerPrivateKey, 'hex' )
 	);
 	return ethUtil.toRpcSig( rsv.v, rsv.r, rsv.s );
 }
