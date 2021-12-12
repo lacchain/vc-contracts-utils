@@ -484,3 +484,7 @@ export function signCredential( credentialHash, issuerPrivateKey ) {
 	);
 	return ethUtil.toRpcSig( rsv.v, rsv.r, rsv.s );
 }
+
+export function getRSV( signature ){
+	return ethUtil.fromRpcSig( signature );
+}
