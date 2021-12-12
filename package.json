@@ -1,6 +1,6 @@
 {
   "name": "@lacchain/vc-contracts-utils",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The LACChain Verifiable Credentials utils",
   "author": "Sergio Ceron Figueroa <sergioce@iadb.org>",
   "keywords": [
