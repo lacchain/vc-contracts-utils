@@ -1,7 +1,7 @@
-const crypto = require( 'crypto' );
-const web3Abi = require( "web3-eth-abi" );
-const web3Utils = require( "web3-utils" );
-const ethUtil = require( "ethereumjs-util" );
+import crypto from "crypto";
+import web3Abi from "web3-eth-abi";
+import web3Utils from "web3-utils";
+import ethUtil from "ethereumjs-util";
 
 export const VERIFIABLE_CREDENTIAL_TYPEHASH = web3Utils.soliditySha3( "VerifiableCredential(address issuer,address subject,bytes32 data,uint256 validFrom,uint256 validTo)" );
 export const EIP712DOMAIN_TYPEHASH = web3Utils.soliditySha3( "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)" );
